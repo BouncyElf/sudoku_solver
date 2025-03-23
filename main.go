@@ -33,6 +33,7 @@ func new_sudoku(data [][]int) (*sudoku, error) {
 	return s, nil
 }
 
+// find all empty position to iterate
 func (s *sudoku) get_next_arr() [][2]int {
 	res := make([][2]int, 0, 81)
 	for i := range s.data {
@@ -43,9 +44,9 @@ func (s *sudoku) get_next_arr() [][2]int {
 		}
 	}
 	return res
-
 }
 
+// try every thing we can and check if it works fine
 func (s *sudoku) solve(next [][2]int, now int, res *[][9][9]int) {
 	if now < 0 || now >= len(next) {
 		return
@@ -68,6 +69,7 @@ func (s *sudoku) solve(next [][2]int, now int, res *[][9][9]int) {
 	}
 }
 
+// get candidate value in current position
 func (s *sudoku) get_available(row_idx, col_idx int) []int {
 	if s == nil ||
 		row_idx < 0 || row_idx > 8 ||
@@ -89,6 +91,7 @@ func (s *sudoku) get_available(row_idx, col_idx int) []int {
 	return res
 }
 
+// try to put the value in current pos, fail when conflicts
 func (s *sudoku) try_put(row_idx, col_idx, val int) bool {
 	if s == nil || val < 1 || val > 9 ||
 		row_idx < 0 || row_idx > 8 ||
@@ -107,6 +110,7 @@ func (s *sudoku) try_put(row_idx, col_idx, val int) bool {
 	return true
 }
 
+// unset current position
 func (s *sudoku) unset(row_idx, col_idx int) {
 	if s == nil ||
 		row_idx < 0 || row_idx > 8 ||
